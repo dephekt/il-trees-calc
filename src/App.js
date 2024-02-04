@@ -1,3 +1,4 @@
+import './App.css'
 import React, { useState } from 'react';
 
 const App = () => {
@@ -31,36 +32,54 @@ const App = () => {
     const totalTax = Object.values(taxDetails).reduce((acc, tax) => acc + tax, 0);
 
     // Calculate total amount (after discount and including taxes)
-    const totalWithTaxes = amountAfterDiscount + totalTax;
+    const totalWithTaxes = () => {
+        return amountAfterDiscount + totalTax;
+    }
 
     return (
-        <div>
-            <input
-                type="number"
-                value={preTaxAmount}
-                onChange={(e) => setPreTaxAmount(e.target.value)}
-                placeholder="Enter pre-tax amount"
-            />
-            <label>
+        <div className="app-container">
+            <div className="input-section">
                 <input
-                    type="checkbox"
-                    checked={isEarlyBirdSpecial}
-                    onChange={(e) => setIsEarlyBirdSpecial(e.target.checked)}
+                    type="number"
+                    value={preTaxAmount}
+                    onChange={(e) => setPreTaxAmount(e.target.value)}
+                    placeholder="Enter pre-tax amount"
+                    className="input-field"
                 />
-                Early Bird Special (15% discount)
-            </label>
-            <div>
-                <h3>Tax Details</h3>
+                <label className="discount-checkbox">
+                    <input
+                        type="checkbox"
+                        checked={isEarlyBirdSpecial}
+                        onChange={(e) => setIsEarlyBirdSpecial(e.target.checked)}
+                    />
+                    Early Bird Special (15% discount)
+                </label>
+            </div>
+            <h3>Tax Breakdown:</h3>
+            <div className="tax-details">
                 {Object.entries(taxDetails).map(([taxName, taxAmount]) => (
-                    <div key={taxName}>{`${taxName}: $${taxAmount.toFixed(2)}`}</div>
+                    <div key={taxName} className="tax-item">
+                        {`${taxName}: `}
+                        <span className="tax-amount">${taxAmount.toFixed(2)}</span>
+                    </div>
                 ))}
+            </div>
+            <div className="total-section">
+                <h3>Taxes Total:</h3>
+                <div className="total-tax-amount">${totalTax.toFixed(2)}</div>
+            </div>
+            <div className="discounts-section">
+                <h3>Discounts:</h3>
                 {isEarlyBirdSpecial && (
-                    <div>Early Bird Discount: -${discount.toFixed(2)}</div>
+                    <div className="discount-item">
+                        Early Bird Discount:
+                        <span className="discount-amount">-${(totalWithTaxes() * 0.15).toFixed(2)}</span>
+                    </div>
                 )}
             </div>
-            <div>
-                <h3>Total Amount (Including Taxes)</h3>
-                <div>${totalWithTaxes.toFixed(2)}</div>
+            <div className="grand-total-section">
+                <h3>Grand Total:</h3>
+                <div className="total-amount">${totalWithTaxes().toFixed(2)}</div>
             </div>
         </div>
     );
