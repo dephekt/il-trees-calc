@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "IL Trees Calc",
+  "name": "Simple app to calculate Illinois cannabis taxes",
   "icons": [
     {
       "src": "favicon.ico",
