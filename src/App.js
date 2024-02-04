@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 const App = () => {
     const [preTaxAmount, setPreTaxAmount] = useState('');
     const [isEarlyBirdSpecial, setIsEarlyBirdSpecial] = useState(false);
-    const [taxDetails, setTaxDetails] = useState({});
 
     const taxRates = {
         countySalesFacilityTax: 0.01,
@@ -14,32 +13,25 @@ const App = () => {
         stateSalesTax: 0.0625 // 6.25%
     };
 
-    const calculateTaxes = () => {
-        const amount = parseFloat(preTaxAmount);
-        if (isNaN(amount)) {
-            return;
-        }
+    // Calculate discount
+    const discount = isEarlyBirdSpecial ? parseFloat(preTaxAmount) * 0.15 : 0;
+    const amountAfterDiscount = parseFloat(preTaxAmount) - discount;
 
-        const calculatedTaxes = {
-            countySalesFacilityTax: amount * taxRates.countySalesFacilityTax,
-            homeRuleTax: amount * taxRates.homeRuleTax,
-            countyCannabisTax: amount * taxRates.countyCannabisTax,
-            municipalCannabisTax: amount * taxRates.municipalCannabisTax,
-            recreationalCannabisExciseTax: amount * taxRates.recreationalCannabisExciseTax,
-            stateSalesTax: amount * taxRates.stateSalesTax,
-        };
-
-        setTaxDetails(calculatedTaxes);
+    // Calculate taxes
+    const taxDetails = {
+        countySalesFacilityTax: amountAfterDiscount * taxRates.countySalesFacilityTax,
+        homeRuleTax: amountAfterDiscount * taxRates.homeRuleTax,
+        countyCannabisTax: amountAfterDiscount * taxRates.countyCannabisTax,
+        municipalCannabisTax: amountAfterDiscount * taxRates.municipalCannabisTax,
+        recreationalCannabisExciseTax: amountAfterDiscount * taxRates.recreationalCannabisExciseTax,
+        stateSalesTax: amountAfterDiscount * taxRates.stateSalesTax,
     };
 
-    const totalWithTaxes = () => {
-        const totalTax = Object.values(taxDetails).reduce((acc, tax) => acc + tax, 0);
-        let total = parseFloat(preTaxAmount) + totalTax;
-        if (isEarlyBirdSpecial) {
-            total *= 0.85; // Apply 15% discount
-        }
-        return total;
-    };
+    // Calculate total tax
+    const totalTax = Object.values(taxDetails).reduce((acc, tax) => acc + tax, 0);
+
+    // Calculate total amount (after discount and including taxes)
+    const totalWithTaxes = amountAfterDiscount + totalTax;
 
     return (
         <div>
@@ -57,19 +49,18 @@ const App = () => {
                 />
                 Early Bird Special (15% discount)
             </label>
-            <button onClick={calculateTaxes}>Calculate Taxes</button>
             <div>
                 <h3>Tax Details</h3>
                 {Object.entries(taxDetails).map(([taxName, taxAmount]) => (
                     <div key={taxName}>{`${taxName}: $${taxAmount.toFixed(2)}`}</div>
                 ))}
                 {isEarlyBirdSpecial && (
-                    <div>Early Bird Discount: -${(totalWithTaxes() * 0.15).toFixed(2)}</div>
+                    <div>Early Bird Discount: -${discount.toFixed(2)}</div>
                 )}
             </div>
             <div>
                 <h3>Total Amount (Including Taxes)</h3>
-                <div>${totalWithTaxes().toFixed(2)}</div>
+                <div>${totalWithTaxes.toFixed(2)}</div>
             </div>
         </div>
     );
