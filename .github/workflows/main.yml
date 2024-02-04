@@ -9,6 +9,8 @@ jobs:
   build:
     name: Build & Upload Static Content
     runs-on: ubuntu-22.04
+    outputs:
+      github-pages: ${{ steps.build-upload.outputs.artifact-id }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -23,6 +25,7 @@ jobs:
       - name: Include CNAME in Build Directory
         run: cp CNAME build/CNAME
       - name: Archive & Upload Build Artifact
+        id: build-upload
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./build"
@@ -43,6 +46,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: github-pages
+          run-id: build
       - name: Deploy to Github Pages
         id: deployment
         uses: actions/deploy-pages@v4
