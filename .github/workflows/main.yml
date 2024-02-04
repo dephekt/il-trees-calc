@@ -1,4 +1,4 @@
-name: Build and Deploy to Pages
+name: Deploy release to Github Pages
 
 on:
   release:
@@ -7,22 +7,42 @@ on:
 
 jobs:
   build:
-    name: Build & deploy to GH Pages
+    name: Build & Upload Static Content
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: "21.6.1"
+      - name: Install Node Dependencies
+        run: npm install
+      - name: Build Static Content
+        run: npm run build
+      - name: Include CNAME in Build Directory
+        run: cp CNAME build/CNAME
+      - name: Archive & Upload Build Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./build"
+  deploy:
+    name: Deploy to Github Pages
+    needs: build
     runs-on: ubuntu-22.04
     permissions:
       pages: write
       id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v3
         with:
-          node-version: "21.6.1"
-      - run: npm install
-      - run: npm run build
-      - run: cp CNAME build/CNAME
-      - name: Upload build artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "./build"
+          name: github-pages
       - name: Deploy to Github Pages
+        id: deployment
         uses: actions/deploy-pages@v4
