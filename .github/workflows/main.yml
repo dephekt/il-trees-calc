@@ -1,0 +1,20 @@
+name: Build and Deploy to Pages
+
+on:
+  release:
+    types: [released]
+  workflow_dispatch:
+
+jobs:
+  build-site:
+    name: Build & deploy to GH Pages
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "21.6.1"
+      - run: npm install
+      - run: npm run build
+      - run: cp CNAME build/CNAME
+      - run: gh-pages -d build
