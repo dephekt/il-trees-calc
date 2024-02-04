@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-site:
+  build:
     name: Build & deploy to GH Pages
     runs-on: ubuntu-22.04
     steps:
@@ -14,11 +14,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "21.6.1"
-      - run: npm install
       - run: npm run build
       - run: cp CNAME build/CNAME
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          personal_token: ${{ secrets.MY_TOKEN }}
-          publish_dir: ./
+          path: "./"
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
