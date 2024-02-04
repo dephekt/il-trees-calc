@@ -15,6 +15,4 @@ jobs:
         with:
           node-version: "21.6.1"
       - run: npm install
-      - run: npm run build
-      - run: cp CNAME build/CNAME
-      - run: gh-pages -d build
+      - run: npm run deploy
