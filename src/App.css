@@ -1,14 +1,17 @@
 .app-container {
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Aligns horizontally center in the container */
+    min-height: 100vh; /* Sets the minimum height to 100% of the viewport height */
 }
 
-.input-section {
-    margin-bottom: 20px;
+.input-section, .tax-details, .total-section, .discounts-section, .grand-total-section {
+    width: 95%; /* Makes each section take full width of the container */
+    max-width: 600px; /* Optional: Restricts maximum width of the content */
 }
 
-.input-field,
-.discount-checkbox,
-.calculate-button {
+.input-field {
     display: block;
     margin: 10px 0;
 }
@@ -21,27 +24,29 @@
     margin: 5px 0;
 }
 
-.tax-amount {
+.tax-total-amount {
     font-weight: bold;
 }
 
-.total-tax-amount {
-    color: red;
+.tax-total {
+    margin-top: 15px;
 }
 
 .discount-item {
     color: green; /* Color for discounts */
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 .discount-amount {
     font-weight: bold;
 }
 
-.total-section {
-    margin-top: 20px;
-}
-
 .total-amount {
     font-size: 1.2em;
     font-weight: bold;
+}
+
+.section-titles {
+    color: black;
 }
