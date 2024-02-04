@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 const App = () => {
     const [preTaxAmount, setPreTaxAmount] = useState('');
+    const [isEarlyBirdSpecial, setIsEarlyBirdSpecial] = useState(false);
     const [taxDetails, setTaxDetails] = useState({});
 
     const taxRates = {
@@ -33,7 +34,11 @@ const App = () => {
 
     const totalWithTaxes = () => {
         const totalTax = Object.values(taxDetails).reduce((acc, tax) => acc + tax, 0);
-        return parseFloat(preTaxAmount) + totalTax;
+        let total = parseFloat(preTaxAmount) + totalTax;
+        if (isEarlyBirdSpecial) {
+            total *= 0.85; // Apply 15% discount
+        }
+        return total;
     };
 
     return (
@@ -44,12 +49,23 @@ const App = () => {
                 onChange={(e) => setPreTaxAmount(e.target.value)}
                 placeholder="Enter pre-tax amount"
             />
+            <label>
+                <input
+                    type="checkbox"
+                    checked={isEarlyBirdSpecial}
+                    onChange={(e) => setIsEarlyBirdSpecial(e.target.checked)}
+                />
+                Early Bird Special (15% discount)
+            </label>
             <button onClick={calculateTaxes}>Calculate Taxes</button>
             <div>
                 <h3>Tax Details</h3>
                 {Object.entries(taxDetails).map(([taxName, taxAmount]) => (
                     <div key={taxName}>{`${taxName}: $${taxAmount.toFixed(2)}`}</div>
                 ))}
+                {isEarlyBirdSpecial && (
+                    <div>Early Bird Discount: -${(totalWithTaxes() * 0.15).toFixed(2)}</div>
+                )}
             </div>
             <div>
                 <h3>Total Amount (Including Taxes)</h3>
