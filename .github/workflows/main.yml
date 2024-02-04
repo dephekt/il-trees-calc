@@ -46,8 +46,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: github-pages
-      - name: Extract Build Tarball
-        run: unzip github-pages.zip
       - name: Deploy to Github Pages
         id: deployment
         uses: actions/deploy-pages@v4
