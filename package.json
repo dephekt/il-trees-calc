@@ -2,7 +2,7 @@
   "name": "il-trees-calc",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://dephekt.github.io/il-trees-calc",
+  "homepage": "https://trees.dephekt.net/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
