@@ -1,6 +1,6 @@
 # IL Trees Calc
 
-[![Deploy release to Github Pages](https://github.com/dephekt/il-trees-calc/actions/workflows/main.yml/badge.svg?event=release)](https://github.com/dephekt/il-trees-calc/actions/workflows/main.yml)
+[![Deployment Workflow](https://github.com/dephekt/il-trees-calc/actions/workflows/main.yml/badge.svg?event=release)](https://github.com/dephekt/il-trees-calc/actions/workflows/main.yml)
 
 Provides a quick way to estimate state and local taxes for Illinois recreational cannabis sales.
 
