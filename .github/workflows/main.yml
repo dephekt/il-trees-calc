@@ -1,4 +1,4 @@
-name: Deploy release to Github Pages
+name: Deployment Workflow
 
 on:
   release:
