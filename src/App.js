@@ -34,6 +34,15 @@ const App = () => {
         stateSalesTax: amountAfterDiscount * taxRates.stateSalesTax,
     };
 
+    const taxNameMapping = {
+        countySalesFacilityTax: 'County Sales Facility Tax',
+        homeRuleTax: 'Home Rule Tax',
+        countyCannabisTax: 'County Cannabis Tax',
+        municipalCannabisTax: 'Municipal Cannabis Tax',
+        recreationalCannabisExciseTax: 'Recreational Cannabis Excise Tax',
+        stateSalesTax: 'State Sales Tax',
+    }
+
     // Calculate total tax
     const totalTax = Object.values(taxDetails).reduce((acc, tax) => acc + tax, 0);
 
@@ -106,18 +115,15 @@ const App = () => {
                     </label>
                 </div>
             </div>
-           <div className="tax-details">
+            <div className="tax-details">
                 <h3 className="section-titles">Taxes:</h3>
                 {Object.entries(taxDetails).map(([taxName, taxAmount]) => (
                     <div key={taxName} className="tax-item">
-                        {`${taxName}: `}
-                        <span className="tax-amount">
-                            ${formatCurrency(taxAmount)}
-                        </span>
+                        {`${taxNameMapping[taxName] || taxName}: `}
+                        <span className="tax-amount">${formatCurrency(taxAmount)}</span>
                     </div>
                 ))}
-                <div className="tax-total">
-                    Total: <span className="tax-total-amount">${formatCurrency(totalTax)}</span>
+                <div className="tax-total">Total: <span className="tax-total-amount">${formatCurrency(totalTax)}</span>
                 </div>
             </div>
             <div className="grand-total-section">
