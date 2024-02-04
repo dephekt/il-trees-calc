@@ -9,6 +9,9 @@ jobs:
   build:
     name: Build & deploy to GH Pages
     runs-on: ubuntu-22.04
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -23,5 +26,3 @@ jobs:
           path: "./build"
       - name: Deploy to Github Pages
         uses: actions/deploy-pages@v4
-        with:
-          token: ${{ secrets.MY_TOKEN }}
