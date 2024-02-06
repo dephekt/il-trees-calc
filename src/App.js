@@ -109,8 +109,7 @@ const App = () => {
                                 10% - Low THC (&le;35%)
                             </label>
                         </div>
-                        <p className="notice-info"><sup>&dagger;</sup>Cannabis-infused products are non-vaporized like
-                            tinctures, edibles,
+                        <p className="notice-info">Cannabis-infused products are non-vaporized like tinctures, edibles,
                             topicals, etc.</p>
                         <h3 className="section-titles">Discounts:</h3>
                         <label className="discount-checkbox">
