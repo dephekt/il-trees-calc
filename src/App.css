@@ -33,11 +33,12 @@
 
 .notice-info {
     position: relative; /* Needed to position the icon absolutely within this container */
-    padding: 10px 35px;
+    padding: 10px 40px;
     margin: 10px 0;
     border: 1px solid #b3d4fc; /* Light blue border */
     border-radius: 8px; /* Rounded corners */
     background-color: #f0f8ff; /* Light background color */
+    color: #333;
     font-size: 0.9rem; /* Smaller font size */
 }
 
@@ -66,10 +67,20 @@
     margin-top: 15px;
 }
 
+.discount-placeholder {
+    height: 10px;
+    margin: 5px 0;
+    visibility: hidden;
+}
+
 .discount-item {
+    visibility: visible;
     color: green; /* Color for discounts */
     font-weight: bold;
-    margin-top: 10px;
+}
+
+.discount-checkbox {
+    margin-bottom: 5px;
 }
 
 .discount-amount {
