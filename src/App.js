@@ -59,6 +59,12 @@ const App = () => {
         <div className="app-container">
             <div className="input-section">
                 <h3 className="section-titles">Pre-Tax Price:</h3>
+                <p>Enter the pre-tax price. The excise tax is different for different types of
+                    cannabis products. So, if your total includes e.g. an edible and a live rosin
+                    concentrate, this calculator doesn't yet handle the nuance of charging 20%
+                    for the edible and 25% for the concentrate. You'll have to do two separate
+                    estimates.
+                </p>
                 <input
                     type="number"
                     value={preTaxAmount}
@@ -69,50 +75,56 @@ const App = () => {
                 <div className="product-type-section">
                     <h3 className="section-titles">Excise Tax</h3>
                     <p>The IL Cannabis Purchaser Excise Tax rate depends on the type of the product in question:</p>
-                    <ul>
-                        <li>10%: Low THC (35% or less)</li>
-                        <li>20%: Infused (tinctures, edibles, topicals, etc.)</li>
-                        <li>25%: High THC (>35%)</li>
-                    </ul>
-                    <label>
-                        <input
-                            type="radio"
-                            value="highTHC"
-                            checked={productType === 'highTHC'}
-                            onChange={(e) => setProductType(e.target.value)}
-                        />
-                        High THC (>35%)
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            value="lowTHC"
-                            checked={productType === 'lowTHC'}
-                            onChange={(e) => setProductType(e.target.value)}
-                        />
-                        Low THC (≤35%)
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            value="infused"
-                            checked={productType === 'infused'}
-                            onChange={(e) => setProductType(e.target.value)}
-                        />
-                        Infused
-                    </label>
-                    <h3 className="section-titles">Discounts:</h3>
-                    <label className="discount-checkbox">
-                        <input
-                            type="checkbox"
-                            checked={isEarlyBirdSpecial}
-                            onChange={(e) => setIsEarlyBirdSpecial(e.target.checked)}
-                        />
-                        Apply Early Bird Discount (15%)
-                        {isEarlyBirdSpecial && preTaxAmount && (
-                            <div className="discount-item">-${formatCurrency(discount)}</div>
-                        )}
-                    </label>
+                    <div className="radio-options">
+                        <div className="radio-option">
+                            <label className="radio-label">
+                                <input
+                                    type="radio"
+                                    value="highTHC"
+                                    checked={productType === 'highTHC'}
+                                    onChange={(e) => setProductType(e.target.value)}
+                                />
+                                25% - High THC (&gt;35%)
+                            </label>
+                        </div>
+                        <div className="radio-option">
+                            <label className="radio-label">
+                                <input
+                                    type="radio"
+                                    value="infused"
+                                    checked={productType === 'infused'}
+                                    onChange={(e) => setProductType(e.target.value)}
+                                />
+                                20% - Infused<sup>&dagger;</sup>
+                            </label>
+                        </div>
+                        <div className="radio-option">
+                            <label className="radio-label">
+                                <input
+                                    type="radio"
+                                    value="lowTHC"
+                                    checked={productType === 'lowTHC'}
+                                    onChange={(e) => setProductType(e.target.value)}
+                                />
+                                10% - Low THC (&le;35%)
+                            </label>
+                        </div>
+                        <p className="notice-info"><sup>&dagger;</sup>Cannabis-infused products are non-vaporized like
+                            tinctures, edibles,
+                            topicals, etc.</p>
+                        <h3 className="section-titles">Discounts:</h3>
+                        <label className="discount-checkbox">
+                            <input
+                                type="checkbox"
+                                checked={isEarlyBirdSpecial}
+                                onChange={(e) => setIsEarlyBirdSpecial(e.target.checked)}
+                            />
+                            Apply Early Bird Discount (15%)
+                            {isEarlyBirdSpecial && preTaxAmount && (
+                                <div className="discount-item">-${formatCurrency(discount)}</div>
+                            )}
+                        </label>
+                    </div>
                 </div>
             </div>
             <div className="tax-details">
@@ -123,11 +135,12 @@ const App = () => {
                         <span className="tax-amount">${formatCurrency(taxAmount)}</span>
                     </div>
                 ))}
-                <div className="tax-total">Total: <span className="tax-total-amount">${formatCurrency(totalTax)}</span>
+                <div className="tax-total">
+                <span className="tax-total-amount">${formatCurrency(totalTax)}</span>
                 </div>
             </div>
             <div className="grand-total-section">
-                <h3>Grand Total:</h3>
+                <h3 className="section-titles">Grand Total:</h3>
                 <div className="total-amount">
                     ${formatCurrency(totalWithTaxes())}
                 </div>
