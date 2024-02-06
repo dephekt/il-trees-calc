@@ -58,13 +58,12 @@ const App = () => {
     return (
         <div className="app-container">
             <div className="input-section">
+                <p className="notice-info">The tax is different for different types of products.
+                    If your total includes e.g. an edible and a live rosin concentrate, this
+                    calculator doesn't yet handle the nuance of charging 20% for the edible and
+                    25% for the concentrate.</p>
                 <h3 className="section-titles">Pre-Tax Price:</h3>
-                <p>Enter the pre-tax price. The excise tax is different for different types of
-                    cannabis products. So, if your total includes e.g. an edible and a live rosin
-                    concentrate, this calculator doesn't yet handle the nuance of charging 20%
-                    for the edible and 25% for the concentrate. You'll have to do two separate
-                    estimates.
-                </p>
+                <p>Enter the pre-tax price.</p>
                 <input
                     type="number"
                     value={preTaxAmount}
@@ -95,7 +94,7 @@ const App = () => {
                                     checked={productType === 'infused'}
                                     onChange={(e) => setProductType(e.target.value)}
                                 />
-                                20% - Infused<sup>&dagger;</sup>
+                                20% - Infused
                             </label>
                         </div>
                         <div className="radio-option">
@@ -109,9 +108,9 @@ const App = () => {
                                 10% - Low THC (&le;35%)
                             </label>
                         </div>
-                        <p className="notice-info"><sup>&dagger;</sup>Cannabis-infused products are non-vaporized like
-                            tinctures, edibles,
-                            topicals, etc.</p>
+                        <p className="notice-info">Cannabis-infused products are non-vaporized like tinctures, edibles,
+                            topicals; regardless of THC level. Common high THC products are concentrates and cartridges.
+                            The most common low THC example would be dried flower, trim, etc.</p>
                         <h3 className="section-titles">Discounts:</h3>
                         <label className="discount-checkbox">
                             <input
@@ -120,10 +119,12 @@ const App = () => {
                                 onChange={(e) => setIsEarlyBirdSpecial(e.target.checked)}
                             />
                             Apply Early Bird Discount (15%)
+                        </label>
+                        <div className="discount-placeholder">
                             {isEarlyBirdSpecial && preTaxAmount && (
                                 <div className="discount-item">-${formatCurrency(discount)}</div>
                             )}
-                        </label>
+                        </div>
                     </div>
                 </div>
             </div>
